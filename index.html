@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Habercom — Sistema de Liquidación de Sueldos</title>
+  <style>
+    :root {
+      --primary: #1a3c5e;
+      --accent:  #2d7dd2;
+      --light:   #e8f1fb;
+      --text:    #1e293b;
+      --muted:   #64748b;
+      --white:   #ffffff;
+      --border:  #dce6f0;
+      --green:   #16a34a;
+      --orange:  #ea580c;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      color: var(--text);
+      background: #f5f8fc;
+      line-height: 1.6;
+    }
+
+    /* ── HERO ── */
+    header {
+      background: linear-gradient(135deg, var(--primary) 0%, #0f2840 100%);
+      color: var(--white);
+      padding: 70px 40px 60px;
+      text-align: center;
+    }
+
+    .logo {
+      font-size: 3rem;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+    .logo span { color: #5aacff; }
+
+    .tagline {
+      margin-top: 10px;
+      font-size: 1.25rem;
+      color: #9cc8f5;
+      font-weight: 400;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      margin-top: 24px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.25);
+      padding: 6px 18px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      color: #cde4ff;
+    }
+
+    /* ── SECCIÓN GENÉRICA ── */
+    section { padding: 60px 40px; max-width: 1100px; margin: 0 auto; }
+
+    h2 {
+      font-size: 1.75rem;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+    .section-intro {
+      color: var(--muted);
+      font-size: 1.05rem;
+      margin-bottom: 36px;
+    }
+
+    /* ── CARDS DE MÓDULOS ── */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 24px;
+      transition: box-shadow .2s, transform .2s;
+    }
+    .card:hover { box-shadow: 0 8px 24px rgba(26,60,94,.12); transform: translateY(-3px); }
+
+    .card-icon {
+      font-size: 2rem;
+      margin-bottom: 12px;
+    }
+
+    .card h3 {
+      font-size: 1.05rem;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+
+    .card p {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    /* ── FLUJO DE TRABAJO ── */
+    .flow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0;
+      counter-reset: step;
+    }
+
+    .step {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 24px 24px;
+      flex: 1 1 180px;
+      position: relative;
+    }
+
+    .step::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      top: -16px;
+      left: 20px;
+      background: var(--accent);
+      color: white;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    .step h3 { font-size: 0.95rem; color: var(--primary); margin-bottom: 6px; }
+    .step p  { font-size: 0.85rem; color: var(--muted); }
+
+    /* Conector entre pasos */
+    .step + .step { margin-left: -1px; border-left-color: transparent; }
+    .step + .step::after {
+      content: '→';
+      position: absolute;
+      left: -16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--accent);
+      font-size: 1.2rem;
+    }
+
+    /* ── ROLES / PERFILES ── */
+    .roles {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .role {
+      background: var(--white);
+      border-top: 4px solid var(--accent);
+      border-radius: 0 0 12px 12px;
+      padding: 24px;
+      border-left: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .role h3 { color: var(--primary); margin-bottom: 12px; font-size: 1rem; }
+
+    .role ul { list-style: none; padding: 0; }
+    .role ul li {
+      font-size: 0.88rem;
+      color: var(--muted);
+      padding: 5px 0;
+      border-bottom: 1px solid #f1f5f9;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    .role ul li::before { content: '✔'; color: var(--green); flex-shrink: 0; }
+
+    /* ── STACK TÉCNICO ── */
+    .tech-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .tech-pill {
+      background: var(--light);
+      color: var(--primary);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 6px 18px;
+      font-size: 0.88rem;
+      font-weight: 600;
+    }
+
+    /* ── HIGHLIGHTS / ESTADÍSTICAS ── */
+    .highlights {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    .highlight {
+      background: var(--primary);
+      color: white;
+      border-radius: 12px;
+      padding: 28px 20px;
+      text-align: center;
+    }
+
+    .highlight .number {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #5aacff;
+    }
+
+    .highlight .label {
+      font-size: 0.82rem;
+      color: #9cc8f5;
+      margin-top: 4px;
+    }
+
+    /* ── CTA FINAL ── */
+    .cta {
+      background: linear-gradient(135deg, var(--accent) 0%, #1a56a0 100%);
+      color: white;
+      text-align: center;
+      border-radius: 16px;
+      padding: 56px 40px;
+      margin: 0 40px 60px;
+    }
+
+    .cta h2 { color: white; font-size: 2rem; margin-bottom: 12px; }
+    .cta p  { color: #cde4ff; font-size: 1.05rem; max-width: 560px; margin: 0 auto 28px; }
+
+    .cta .btn {
+      display: inline-block;
+      background: white;
+      color: var(--primary);
+      padding: 14px 36px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 1rem;
+      text-decoration: none;
+      transition: opacity .2s;
+    }
+    .cta .btn:hover { opacity: .9; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--primary);
+      color: #9cc8f5;
+      text-align: center;
+      padding: 24px 40px;
+      font-size: 0.85rem;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      header { padding: 48px 20px 40px; }
+      section { padding: 40px 20px; }
+      .logo { font-size: 2rem; }
+      .step + .step::after { display: none; }
+      .cta { margin: 0 20px 40px; padding: 40px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <header>
+    <div class="logo">Haber<span>com</span></div>
+    <div class="tagline">Sistema de distribución de recibos de sueldo</div>
+    <div class="hero-badge">Para estudios contables y empresas · 100% web</div>
+  </header>
+
+  <!-- QUÉ ES -->
+  <section>
+    <h2>¿Qué es Habercom?</h2>
+    <p class="section-intro">
+      Habercom es un sistema web que automatiza la entrega de recibos de sueldo a los empleados.
+      El contador o estudio sube un único PDF masivo con todos los recibos del período, y el sistema
+      los divide, identifica y envía por email a cada empleado de forma automática.
+    </p>
+
+    <div class="highlights">
+      <div class="highlight">
+        <div class="number">3</div>
+        <div class="label">Pasos para enviar todos los recibos</div>
+      </div>
+      <div class="highlight">
+        <div class="number">100%</div>
+        <div class="label">Automático — sin intervención manual por empleado</div>
+      </div>
+      <div class="highlight">
+        <div class="number">Multi</div>
+        <div class="label">empresa: un estudio, muchas empresas</div>
+      </div>
+      <div class="highlight">
+        <div class="number">PDF</div>
+        <div class="label">Recibo individual por empleado en el email</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MÓDULOS -->
+  <section style="background: var(--light); max-width: 100%; padding: 60px 40px;">
+    <div style="max-width:1100px; margin:0 auto;">
+      <h2>Módulos del sistema</h2>
+      <p class="section-intro">Cada módulo cubre una parte del proceso, desde la carga de datos hasta el envío.</p>
+
+      <div class="cards">
+
+        <div class="card">
+          <div class="card-icon">🏢</div>
+          <h3>Gestión de Estudios</h3>
+          <p>Registra los estudios contables que operan el sistema, con su propia configuración de correo (SMTP) y estado activo/suspendido.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">🏭</div>
+          <h3>Gestión de Empresas</h3>
+          <p>Cada estudio administra sus empresas cliente. Alta, edición, baja y suspensión de empresas, con CUIT y datos de contacto.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">👷</div>
+          <h3>Gestión de Empleados</h3>
+          <p>Alta manual o importación masiva desde <strong>Excel (.xlsx) o CSV</strong>. Datos: nombre, apellido, CUIL, email y fecha de ingreso.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">📄</div>
+          <h3>Procesamiento de Lotes PDF</h3>
+          <p>Se sube un único PDF masivo con todos los recibos del período. El sistema lee cada página, extrae el CUIL del empleado y genera un PDF individual por persona.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">📧</div>
+          <h3>Envío automático por email</h3>
+          <p>Cada empleado recibe su recibo en su correo personal. Si tiene más de un recibo en el lote, se agrupa en un solo email con múltiples adjuntos.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">📥</div>
+          <h3>Bandeja de documentos</h3>
+          <p>Panel donde el administrador ve todos los recibos por período, empresa y estado. Los empleados también pueden acceder y descargar su recibo directamente.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">🔐</div>
+          <h3>Usuarios y roles</h3>
+          <p>Sistema de login con dos roles: <strong>Admin</strong> (estudio/contador) con acceso total, y <strong>Empresa</strong> con acceso solo a sus empleados y documentos.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">⚙️</div>
+          <h3>Configuración SMTP por estudio</h3>
+          <p>Cada estudio puede configurar su propio servidor de correo (host, puerto, usuario, contraseña, TLS y nombre del remitente).</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FLUJO DE TRABAJO -->
+  <section>
+    <h2>Flujo de trabajo</h2>
+    <p class="section-intro">Así funciona el proceso completo desde que se liquida el sueldo hasta que el empleado recibe su recibo.</p>
+
+    <div class="flow" style="gap: 16px;">
+      <div class="step">
+        <h3>Importar empleados</h3>
+        <p>Subís el padrón de empleados desde Excel o CSV. El sistema crea o actualiza por CUIL.</p>
+      </div>
+      <div class="step">
+        <h3>Subir el PDF masivo</h3>
+        <p>Seleccionás la empresa, el período (mes/año) y subís el PDF completo de la liquidación.</p>
+      </div>
+      <div class="step">
+        <h3>Procesamiento automático</h3>
+        <p>El sistema divide el PDF página a página, extrae el CUIL y genera un archivo individual por empleado.</p>
+      </div>
+      <div class="step">
+        <h3>Revisión del lote</h3>
+        <p>Ves el resumen: cuántos se procesaron, cuántos tuvieron error, y el detalle de cada uno.</p>
+      </div>
+      <div class="step">
+        <h3>Envío masivo</h3>
+        <p>Con un click enviás todos los emails. Cada empleado recibe su recibo como adjunto PDF.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PERFILES DE USUARIO -->
+  <section style="background: var(--light); max-width: 100%; padding: 60px 40px;">
+    <div style="max-width:1100px; margin:0 auto;">
+      <h2>Perfiles de usuario</h2>
+      <p class="section-intro">El sistema soporta dos tipos de usuarios con accesos diferenciados.</p>
+
+      <div class="roles">
+
+        <div class="role">
+          <h3>👨‍💼 Administrador (Estudio Contable)</h3>
+          <ul>
+            <li>Gestiona todas las empresas del estudio</li>
+            <li>Da de alta y edita empleados</li>
+            <li>Importa nóminas desde Excel/CSV</li>
+            <li>Sube y procesa lotes de PDF</li>
+            <li>Envía los recibos por email</li>
+            <li>Ve el historial completo de documentos</li>
+            <li>Configura el servidor de correo propio</li>
+            <li>Activa o suspende empresas</li>
+          </ul>
+        </div>
+
+        <div class="role">
+          <h3>🏭 Usuario Empresa</h3>
+          <ul>
+            <li>Ve los documentos de su empresa</li>
+            <li>Descarga recibos de sus empleados</li>
+            <li>Consulta el estado de cada envío</li>
+            <li>Acceso restringido a su propia empresa</li>
+          </ul>
+        </div>
+
+        <div class="role" style="border-top-color: var(--green);">
+          <h3>👤 Empleado (futuro)</h3>
+          <ul>
+            <li>Login con CUIL y contraseña</li>
+            <li>Descarga sus propios recibos</li>
+            <li>Historial de períodos anteriores</li>
+            <li>Sin acceso a datos de otros empleados</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- IMPORTACIÓN DE EMPLEADOS -->
+  <section>
+    <h2>Importación masiva de empleados</h2>
+    <p class="section-intro">
+      No hace falta cargar empleado por empleado. El sistema acepta archivos Excel (.xlsx) o CSV
+      con el padrón completo y los carga en segundos.
+    </p>
+
+    <div class="cards" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+      <div class="card" style="border-top: 3px solid var(--accent);">
+        <div class="card-icon">📊</div>
+        <h3>Formato Excel (.xlsx)</h3>
+        <p>Compatible con cualquier planilla de liquidación. Solo necesita las columnas: apellido, nombre, cuil, email.</p>
+      </div>
+      <div class="card" style="border-top: 3px solid var(--accent);">
+        <div class="card-icon">📋</div>
+        <h3>Formato CSV</h3>
+        <p>Compatible con exportaciones de sistemas de liquidación (Bejerman, Tango, etc.)</p>
+      </div>
+      <div class="card" style="border-top: 3px solid var(--accent);">
+        <div class="card-icon">🔄</div>
+        <h3>Alta y actualización</h3>
+        <p>Si el empleado ya existe (mismo CUIL) se actualiza. Si es nuevo, se crea. Sin duplicados.</p>
+      </div>
+      <div class="card" style="border-top: 3px solid var(--accent);">
+        <div class="card-icon">⚠️</div>
+        <h3>Informe de errores</h3>
+        <p>Muestra fila por fila qué registros fallaron y por qué, sin interrumpir la importación.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEGURIDAD Y CONTROL -->
+  <section style="background: var(--light); max-width: 100%; padding: 60px 40px;">
+    <div style="max-width:1100px; margin:0 auto;">
+      <h2>Seguridad y control</h2>
+      <p class="section-intro">El sistema fue diseñado para que cada actor vea solo lo que le corresponde.</p>
+
+      <div class="cards">
+        <div class="card">
+          <div class="card-icon">🔒</div>
+          <h3>Acceso seguro</h3>
+          <p>Login con usuario y contraseña. Todas las rutas requieren autenticación. Sin acceso a documentos de otras empresas.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🚫</div>
+          <h3>Suspensión de cuentas</h3>
+          <p>Si un estudio o empresa está suspendido, el sistema bloquea automáticamente la subida de lotes y el envío de emails.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">📝</div>
+          <h3>Log de errores</h3>
+          <p>Cada lote registra en detalle qué páginas no pudieron procesarse y por qué, para auditoría y corrección.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">📦</div>
+          <h3>Archivos preservados</h3>
+          <p>Cada recibo queda almacenado en el servidor, disponible para descarga posterior sin necesidad de reenviar.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STACK TÉCNICO -->
+  <section>
+    <h2>Tecnología</h2>
+    <p class="section-intro">Construido con tecnologías robustas, probadas en producción.</p>
+
+    <div class="tech-grid">
+      <span class="tech-pill">Python</span>
+      <span class="tech-pill">Django</span>
+      <span class="tech-pill">PostgreSQL / SQL Server</span>
+      <span class="tech-pill">pdfplumber</span>
+      <span class="tech-pill">pypdf</span>
+      <span class="tech-pill">openpyxl</span>
+      <span class="tech-pill">SMTP configurable</span>
+      <span class="tech-pill">100% Web — sin instalación</span>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta">
+    <h2>Simplificá la entrega de recibos</h2>
+    <p>Dejá de imprimir, escanear y reenviar manualmente. Con Habercom el proceso tarda minutos, no horas.</p>
+    <a href="mailto:info@habercom.com.ar" class="btn">Solicitar demo</a>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <strong style="color:white;">Habercom</strong> — Sistema de distribución de recibos de sueldo &nbsp;·&nbsp;
+    Desarrollado en Argentina &nbsp;·&nbsp; 2026
+  </footer>
+
+</body>
+</html>
