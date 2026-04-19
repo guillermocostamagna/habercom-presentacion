@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Habercom — Sistema de Liquidación de Sueldos</title>
+  <title>HaberesCom — Sistema de Liquidación de Sueldos</title>
   <style>
     :root {
       --primary: #1a3c5e;
@@ -109,7 +109,7 @@
     .flow {
       display: flex;
       flex-wrap: wrap;
-      gap: 0;
+      gap: 16px;
       counter-reset: step;
     }
 
@@ -143,22 +143,10 @@
     .step h3 { font-size: 0.95rem; color: var(--primary); margin-bottom: 6px; }
     .step p  { font-size: 0.85rem; color: var(--muted); }
 
-    /* Conector entre pasos */
-    .step + .step { margin-left: -1px; border-left-color: transparent; }
-    .step + .step::after {
-      content: '→';
-      position: absolute;
-      left: -16px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--accent);
-      font-size: 1.2rem;
-    }
-
     /* ── ROLES / PERFILES ── */
     .roles {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       gap: 24px;
     }
 
@@ -271,7 +259,6 @@
       header { padding: 48px 20px 40px; }
       section { padding: 40px 20px; }
       .logo { font-size: 2rem; }
-      .step + .step::after { display: none; }
       .cta { margin: 0 20px 40px; padding: 40px 20px; }
     }
   </style>
@@ -280,18 +267,19 @@
 
   <!-- HERO -->
   <header>
-    <div class="logo">Haber<span>com</span></div>
+    <div class="logo">Haberes<span>Com</span></div>
     <div class="tagline">Sistema de distribución de recibos de sueldo</div>
-    <div class="hero-badge">Para estudios contables y empresas · 100% web</div>
+    <div class="hero-badge">Para estudios contables y empresas · 100% web · En producción</div>
   </header>
 
   <!-- QUÉ ES -->
   <section>
-    <h2>¿Qué es Habercom?</h2>
+    <h2>¿Qué es HaberesCom?</h2>
     <p class="section-intro">
-      Habercom es un sistema web que automatiza la entrega de recibos de sueldo a los empleados.
+      HaberesCom es un sistema web SaaS que automatiza la entrega de recibos de sueldo.
       El contador o estudio sube un único PDF masivo con todos los recibos del período, y el sistema
-      los divide, identifica y envía por email a cada empleado de forma automática.
+      los divide, identifica a cada empleado por CUIL y los envía por email de forma automática.
+      Cada empresa y cada empleado tiene su propio acceso al portal.
     </p>
 
     <div class="highlights">
@@ -308,8 +296,8 @@
         <div class="label">empresa: un estudio, muchas empresas</div>
       </div>
       <div class="highlight">
-        <div class="number">PDF</div>
-        <div class="label">Recibo individual por empleado en el email</div>
+        <div class="number">3</div>
+        <div class="label">Roles de usuario: Estudio, Empresa y Empleado</div>
       </div>
     </div>
   </section>
@@ -318,56 +306,56 @@
   <section style="background: var(--light); max-width: 100%; padding: 60px 40px;">
     <div style="max-width:1100px; margin:0 auto;">
       <h2>Módulos del sistema</h2>
-      <p class="section-intro">Cada módulo cubre una parte del proceso, desde la carga de datos hasta el envío.</p>
+      <p class="section-intro">Cada módulo cubre una parte del proceso, desde la carga de datos hasta el envío y consulta de recibos.</p>
 
       <div class="cards">
 
         <div class="card">
           <div class="card-icon">🏢</div>
           <h3>Gestión de Estudios</h3>
-          <p>Registra los estudios contables que operan el sistema, con su propia configuración de correo (SMTP) y estado activo/suspendido.</p>
+          <p>Registra los estudios contables que operan el sistema, con configuración de correo SMTP propia, usuario administrador y estado activo/suspendido.</p>
         </div>
 
         <div class="card">
           <div class="card-icon">🏭</div>
           <h3>Gestión de Empresas</h3>
-          <p>Cada estudio administra sus empresas cliente. Alta, edición, baja y suspensión de empresas, con CUIT y datos de contacto.</p>
+          <p>Cada estudio administra sus empresas cliente. Alta, edición, suspensión, usuario de acceso propio y configuración SMTP independiente por empresa.</p>
         </div>
 
         <div class="card">
           <div class="card-icon">👷</div>
           <h3>Gestión de Empleados</h3>
-          <p>Alta manual o importación masiva desde <strong>Excel (.xlsx) o CSV</strong>. Datos: nombre, apellido, CUIL, email y fecha de ingreso.</p>
+          <p>Alta manual o importación masiva desde <strong>Excel (.xlsx) o CSV</strong>. Cada empleado puede tener su propio usuario de acceso al portal.</p>
         </div>
 
         <div class="card">
           <div class="card-icon">📄</div>
           <h3>Procesamiento de Lotes PDF</h3>
-          <p>Se sube un único PDF masivo con todos los recibos del período. El sistema lee cada página, extrae el CUIL del empleado y genera un PDF individual por persona.</p>
+          <p>Soporta múltiples formatos de recibo. El sistema extrae el CUIL de cada página automáticamente y genera un PDF individual por empleado.</p>
         </div>
 
         <div class="card">
           <div class="card-icon">📧</div>
           <h3>Envío automático por email</h3>
-          <p>Cada empleado recibe su recibo en su correo personal. Si tiene más de un recibo en el lote, se agrupa en un solo email con múltiples adjuntos.</p>
+          <p>Cada empleado recibe su recibo en su correo. El remitente puede ser el estudio o la propia empresa, según la configuración SMTP elegida.</p>
         </div>
 
         <div class="card">
           <div class="card-icon">📥</div>
           <h3>Bandeja de documentos</h3>
-          <p>Panel donde el administrador ve todos los recibos por período, empresa y estado. Los empleados también pueden acceder y descargar su recibo directamente.</p>
+          <p>Panel con filtros por empleado, CUIL, empresa y período. El estudio ve todo, la empresa ve los suyos, el empleado ve solo los propios.</p>
         </div>
 
         <div class="card">
           <div class="card-icon">🔐</div>
           <h3>Usuarios y roles</h3>
-          <p>Sistema de login con dos roles: <strong>Admin</strong> (estudio/contador) con acceso total, y <strong>Empresa</strong> con acceso solo a sus empleados y documentos.</p>
+          <p>Tres roles diferenciados: <strong>Estudio</strong> (acceso total), <strong>Empresa</strong> (sus empleados y recibos) y <strong>Empleado</strong> (solo sus propios recibos).</p>
         </div>
 
         <div class="card">
           <div class="card-icon">⚙️</div>
-          <h3>Configuración SMTP por estudio</h3>
-          <p>Cada estudio puede configurar su propio servidor de correo (host, puerto, usuario, contraseña, TLS y nombre del remitente).</p>
+          <h3>SMTP configurable por nivel</h3>
+          <p>El estudio configura su SMTP global. Cada empresa puede tener su propio servidor de correo (Gmail, Outlook o dominio propio), que tiene prioridad sobre el del estudio.</p>
         </div>
 
       </div>
@@ -377,28 +365,32 @@
   <!-- FLUJO DE TRABAJO -->
   <section>
     <h2>Flujo de trabajo</h2>
-    <p class="section-intro">Así funciona el proceso completo desde que se liquida el sueldo hasta que el empleado recibe su recibo.</p>
+    <p class="section-intro">Así funciona el proceso completo desde que se liquida el sueldo hasta que el empleado recibe y consulta su recibo.</p>
 
-    <div class="flow" style="gap: 16px;">
+    <div class="flow">
       <div class="step">
-        <h3>Importar empleados</h3>
-        <p>Subís el padrón de empleados desde Excel o CSV. El sistema crea o actualiza por CUIL.</p>
+        <h3>Cargar empleados</h3>
+        <p>Alta manual o importación masiva desde Excel/CSV. El sistema crea o actualiza por CUIL.</p>
       </div>
       <div class="step">
         <h3>Subir el PDF masivo</h3>
-        <p>Seleccionás la empresa, el período (mes/año) y subís el PDF completo de la liquidación.</p>
+        <p>Seleccionás la empresa, el período y subís el PDF completo de la liquidación.</p>
       </div>
       <div class="step">
         <h3>Procesamiento automático</h3>
-        <p>El sistema divide el PDF página a página, extrae el CUIL y genera un archivo individual por empleado.</p>
+        <p>El sistema divide el PDF, extrae el CUIL de cada página y genera un archivo individual por empleado.</p>
       </div>
       <div class="step">
         <h3>Revisión del lote</h3>
-        <p>Ves el resumen: cuántos se procesaron, cuántos tuvieron error, y el detalle de cada uno.</p>
+        <p>Ves el resumen: procesados, errores y el detalle de cada documento generado.</p>
       </div>
       <div class="step">
         <h3>Envío masivo</h3>
-        <p>Con un click enviás todos los emails. Cada empleado recibe su recibo como adjunto PDF.</p>
+        <p>Con un click enviás todos los emails desde la cuenta del estudio o de la empresa.</p>
+      </div>
+      <div class="step">
+        <h3>Consulta y descarga</h3>
+        <p>El empleado ingresa al portal con su usuario y descarga su recibo cuando quiera.</p>
       </div>
     </div>
   </section>
@@ -407,7 +399,7 @@
   <section style="background: var(--light); max-width: 100%; padding: 60px 40px;">
     <div style="max-width:1100px; margin:0 auto;">
       <h2>Perfiles de usuario</h2>
-      <p class="section-intro">El sistema soporta dos tipos de usuarios con accesos diferenciados.</p>
+      <p class="section-intro">El sistema soporta tres tipos de usuarios con accesos completamente diferenciados.</p>
 
       <div class="roles">
 
@@ -419,28 +411,33 @@
             <li>Importa nóminas desde Excel/CSV</li>
             <li>Sube y procesa lotes de PDF</li>
             <li>Envía los recibos por email</li>
-            <li>Ve el historial completo de documentos</li>
-            <li>Configura el servidor de correo propio</li>
+            <li>Ve el historial completo con filtros</li>
+            <li>Configura el SMTP del estudio</li>
             <li>Activa o suspende empresas</li>
+            <li>Crea usuarios para empresas y empleados</li>
           </ul>
         </div>
 
         <div class="role">
           <h3>🏭 Usuario Empresa</h3>
           <ul>
-            <li>Ve los documentos de su empresa</li>
-            <li>Descarga recibos de sus empleados</li>
-            <li>Consulta el estado de cada envío</li>
+            <li>Sube y procesa sus propios lotes PDF</li>
+            <li>Envía recibos a sus empleados</li>
+            <li>Ve y descarga recibos de sus empleados</li>
+            <li>Filtra por empleado, CUIL y período</li>
+            <li>Gestiona sus propios empleados</li>
+            <li>Configura su propio correo SMTP</li>
             <li>Acceso restringido a su propia empresa</li>
           </ul>
         </div>
 
         <div class="role" style="border-top-color: var(--green);">
-          <h3>👤 Empleado (futuro)</h3>
+          <h3>👤 Empleado</h3>
           <ul>
-            <li>Login con CUIL y contraseña</li>
-            <li>Descarga sus propios recibos</li>
-            <li>Historial de períodos anteriores</li>
+            <li>Acceso con usuario y contraseña propios</li>
+            <li>Ve únicamente sus propios recibos</li>
+            <li>Descarga sus recibos en PDF</li>
+            <li>Filtra por período</li>
             <li>Sin acceso a datos de otros empleados</li>
           </ul>
         </div>
@@ -461,12 +458,12 @@
       <div class="card" style="border-top: 3px solid var(--accent);">
         <div class="card-icon">📊</div>
         <h3>Formato Excel (.xlsx)</h3>
-        <p>Compatible con cualquier planilla de liquidación. Solo necesita las columnas: apellido, nombre, cuil, email.</p>
+        <p>Compatible con cualquier planilla de liquidación. Columnas requeridas: apellido, nombre, cuil, email.</p>
       </div>
       <div class="card" style="border-top: 3px solid var(--accent);">
         <div class="card-icon">📋</div>
         <h3>Formato CSV</h3>
-        <p>Compatible con exportaciones de sistemas de liquidación (Bejerman, Tango, etc.)</p>
+        <p>Compatible con exportaciones de sistemas de liquidación como Bejerman, Tango, entre otros.</p>
       </div>
       <div class="card" style="border-top: 3px solid var(--accent);">
         <div class="card-icon">🔄</div>
@@ -490,8 +487,8 @@
       <div class="cards">
         <div class="card">
           <div class="card-icon">🔒</div>
-          <h3>Acceso seguro</h3>
-          <p>Login con usuario y contraseña. Todas las rutas requieren autenticación. Sin acceso a documentos de otras empresas.</p>
+          <h3>Acceso seguro por roles</h3>
+          <p>Login con usuario y contraseña. Tres roles diferenciados. Ningún usuario puede acceder a datos que no le pertenecen.</p>
         </div>
         <div class="card">
           <div class="card-icon">🚫</div>
@@ -512,33 +509,68 @@
     </div>
   </section>
 
-  <!-- STACK TÉCNICO -->
+  <!-- CORREO -->
   <section>
-    <h2>Tecnología</h2>
-    <p class="section-intro">Construido con tecnologías robustas, probadas en producción.</p>
+    <h2>Configuración de correo flexible</h2>
+    <p class="section-intro">Cada nivel del sistema puede tener su propio servidor de correo saliente.</p>
 
-    <div class="tech-grid">
-      <span class="tech-pill">Python</span>
-      <span class="tech-pill">Django</span>
-      <span class="tech-pill">PostgreSQL / SQL Server</span>
-      <span class="tech-pill">pdfplumber</span>
-      <span class="tech-pill">pypdf</span>
-      <span class="tech-pill">openpyxl</span>
-      <span class="tech-pill">SMTP configurable</span>
-      <span class="tech-pill">100% Web — sin instalación</span>
+    <div class="cards">
+      <div class="card" style="border-top: 3px solid var(--accent);">
+        <div class="card-icon">📮</div>
+        <h3>SMTP del Estudio</h3>
+        <p>El estudio configura su servidor global. Se usa como fallback cuando la empresa no tiene SMTP propio.</p>
+      </div>
+      <div class="card" style="border-top: 3px solid var(--accent);">
+        <div class="card-icon">📬</div>
+        <h3>SMTP por Empresa</h3>
+        <p>Cada empresa puede configurar su propio servidor. Los correos salen con el nombre y email de la empresa, no del estudio.</p>
+      </div>
+      <div class="card" style="border-top: 3px solid var(--accent);">
+        <div class="card-icon">🧪</div>
+        <h3>Prueba de envío</h3>
+        <p>Botón para enviar un correo de prueba desde la configuración, verificando que el SMTP funcione antes del envío masivo.</p>
+      </div>
+      <div class="card" style="border-top: 3px solid var(--accent);">
+        <div class="card-icon">🌐</div>
+        <h3>Compatible con Gmail, Outlook y dominio propio</h3>
+        <p>Funciona con cualquier proveedor SMTP estándar. Preparado para escalar a SendGrid o Brevo ante grandes volúmenes.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STACK TÉCNICO -->
+  <section style="background: var(--light); max-width: 100%; padding: 60px 40px;">
+    <div style="max-width:1100px; margin:0 auto;">
+      <h2>Tecnología</h2>
+      <p class="section-intro">Construido con tecnologías robustas, open source y en producción en un VPS en Argentina.</p>
+
+      <div class="tech-grid">
+        <span class="tech-pill">Python 3.12</span>
+        <span class="tech-pill">Django 5</span>
+        <span class="tech-pill">PostgreSQL</span>
+        <span class="tech-pill">pdfplumber</span>
+        <span class="tech-pill">pypdf</span>
+        <span class="tech-pill">openpyxl</span>
+        <span class="tech-pill">Gunicorn</span>
+        <span class="tech-pill">Nginx</span>
+        <span class="tech-pill">Ubuntu 22.04 LTS</span>
+        <span class="tech-pill">SMTP configurable por nivel</span>
+        <span class="tech-pill">Bootstrap 5</span>
+        <span class="tech-pill">100% Web — sin instalación</span>
+      </div>
     </div>
   </section>
 
   <!-- CTA -->
   <div class="cta">
     <h2>Simplificá la entrega de recibos</h2>
-    <p>Dejá de imprimir, escanear y reenviar manualmente. Con Habercom el proceso tarda minutos, no horas.</p>
-    <a href="mailto:info@habercom.com.ar" class="btn">Solicitar demo</a>
+    <p>Dejá de imprimir, escanear y reenviar manualmente. Con HaberesCom el proceso tarda minutos, no horas.</p>
+    <a href="mailto:info@haberescom.com.ar" class="btn">Solicitar demo</a>
   </div>
 
   <!-- FOOTER -->
   <footer>
-    <strong style="color:white;">Habercom</strong> — Sistema de distribución de recibos de sueldo &nbsp;·&nbsp;
+    <strong style="color:white;">HaberesCom</strong> — Sistema de distribución de recibos de sueldo &nbsp;·&nbsp;
     Desarrollado en Argentina &nbsp;·&nbsp; 2026
   </footer>
 
